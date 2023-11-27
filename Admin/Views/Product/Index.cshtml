@@ -1,0 +1,248 @@
+﻿@using Utilities.Constant
+@model IEnumerable<Utilities.ViewModel.ProductViewModel>;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<main role="main" class="main-content">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-md-12 my-4">
+                        @* tag message *@
+                        @{
+                            if (TempData[@TempDataNameConst.SuccessMessage] != null)
+                            {
+                                <div id="@TempDataNameConst.SuccessMessage" class="alert alert-success collapse">
+                                    <strong>@TempData[@TempDataNameConst.SuccessMessage]</strong>
+                                </div>
+                            }
+                            else if (TempData[@TempDataNameConst.ErrorMessage] != null)
+                            {
+                                <div id="@TempDataNameConst.ErrorMessage" class="alert alert-danger collapse">
+                                    <strong>@TempData[@TempDataNameConst.ErrorMessage]</strong>
+                                </div>
+                            }
+                        }
+                        <h2 class="h4 mb-1">My Product</h2>
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <div class="toolbar row mb-3">
+                                    <div class="col">
+                                        <form class="form-inline">
+                                            <div class="form-row">
+                                                <div class="form-group col-auto">
+                                                    <label for="search" class="sr-only">Search</label>
+                                                    <input type="text" class="form-control" id="search" value="" placeholder="Search">
+                                                </div>
+                                                @* Combobox search *@
+                                                <div class="form-group col-auto ml-3">
+                                                    <label class="my-1 mr-2 sr-only" for="inlineFormCustomSelectPref">Status</label>
+                                                    <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+                                                        <option selected>Choose...</option>
+                                                        <option value="1">Processing</option>
+                                                        <option value="2">Approved</option>
+                                                        <option value="3">Rejected</option>
+                                                        <option value="3">Sold</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col ml-auto">
+                                        <div class="dropdown float-right">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="actionMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Action </button>
+                                            <div class="dropdown-menu" aria-labelledby="actionMenuButton">
+                                                <a class="dropdown-item">Approve</a>
+                                                <a class="dropdown-item">Reject</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- table -->
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr role="row">
+                                            <th colspan="2">Products</th>
+                                            <th colspan="7">Information</th>
+                                            <th colspan="2">State</th>
+                                        </tr>
+                                        <tr role="row">
+                                            <th>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="all">
+                                                    <label class="custom-control-label" for="all"></label>
+                                                </div>
+                                            </th>
+                                            <th>ID</th>
+                                            <th>Product Name</th>
+                                            <th>Init Price</th>
+                                            <th>Step Price</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th>Category</th>
+                                            <th>Description</th>
+                                            <th>Approve</th>
+                                            <th>Sold</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model == null)
+                                        {
+                                            <tr><td colspan="12" class="text-center">No Data</td></tr>
+                                        }
+                                        else
+                                        {
+                                            @foreach (var (index, item) in Model.Select((value, index) => (index, value)))
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" id="2576">
+                                                            <label class="custom-control-label" for="2576"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>@(index + 1)</td>
+                                                    <td>@item.ProductName</td>
+                                                    <td>@item.InitPrice</td>
+                                                    <td>@item.StepPrice</td>
+                                                    <td>@item.StartDate</td>
+                                                    <td>@item.EndDate</td>
+                                                    <td>@item.CategoryName</td>
+                                                    <td><span class="shortenedText">@item.Description</span></td>
+                                                    @if (@item.IsApprove == false)
+                                                    {
+                                                        <td>No</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>Yes</td>
+                                                    }
+                                                    @if (@item.IsSold == false)
+                                                    {
+                                                        <td>No</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>Yes</td>
+                                                    }
+                                                    <td>
+                                                        <button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <span class="text-muted sr-only">Action</span>
+                                                        </button>
+                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                            <a asp-controller="Product" asp-action="Approve" asp-route-Id="@item.IdProduct" class="dropdown-item">Approve</a>
+                                                            <a class="dropdown-item reject-link" data-toggle="modal" data-target="#varyModal" data-product-id="@item.IdProduct">Reject</a>
+                                                            @*  <a asp-controller="Product" asp-action="Reject" asp-route-Id="@item.IdProduct" class="dropdown-item">Reject</a> *@
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                                <nav aria-label="Table Paging" class="mb-0 text-muted">
+                                    <ul class="pagination justify-content-end mb-0">
+                                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div> <!-- simple table -->
+                </div> <!-- end section -->
+            </div> <!-- .col-12 -->
+        </div> <!-- .row -->
+    </div> <!-- .container-fluid -->
+    @* modal reject product *@
+    <div class="modal fade" id="varyModal" tabindex="-1" role="dialog" aria-labelledby="varyModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="varyModalLabel">Reasons for rejection</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <input hidden for="message-text" class="col-form-label" />
+                            <label for="message-text" class="col-form-label">Message:</label>
+                            <textarea class="form-control" id="message-text"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="sendRejectButton" class="btn mb-2 btn-danger">Send and Reject</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @* modal reject product *@
+</main> <!-- main -->
+@* substring description long *@
+<script type="text/javascript">
+
+    var desElements = document.querySelectorAll('span.shortenedText');
+    var maxLength = 25;
+
+    desElements.forEach(function (element) {
+        var textContent = element.textContent;
+
+        if (textContent.length > maxLength) {
+            var shortenedText = textContent.substring(0, maxLength) + "...";
+            element.textContent = shortenedText;
+        }
+    });
+
+    // modal product
+    document.addEventListener("DOMContentLoaded", function () {
+        // Lưu id sản phẩm vào modal khi nhấp vào liên kết "Reject"
+        var rejectLinks = document.querySelectorAll(".reject-link");
+        rejectLinks.forEach(function (link) {
+            link.addEventListener("click", function () {
+                var productId = link.getAttribute("data-product-id");
+                var modal = document.getElementById("varyModal");
+                modal.setAttribute("data-product-id", productId);
+            });
+        });
+
+        // Xử lý sự kiện khi nhấn nút "Send and Reject" trong modal
+        var sendRejectButton = document.getElementById("sendRejectButton");
+        sendRejectButton.addEventListener("click", function () {
+
+            var message = document.getElementById("message-text").value;
+
+            if (message !== "") {
+
+                var modal = document.getElementById("varyModal");
+                var productId = modal.getAttribute("data-product-id");
+                modal.style.display = "none";
+
+                fetch('/Product/Reject', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ ProductId: productId, Message: message })
+                }).then(function (response) {
+                    if (response.ok) {
+                        window.location.href = "/Product/Index/Index";
+                    }
+                });
+            }
+        });
+    });
+
+</script>
+
+@* show message *@
+<script src="~/js/ShowSuccessMessage.js"></script>
+<script src="~/js/ShowErrorMessage.js"></script>

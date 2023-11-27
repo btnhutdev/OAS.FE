@@ -1,0 +1,247 @@
+﻿@model IEnumerable<Utilities.ViewModel.ProductViewModel>;
+@using Utilities.Constant
+@using Utilities.ViewModel;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* Thiết lập margin và padding cho tất cả các phần tử */
+    * {
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box; /* Đảm bảo chiều cao và chiều rộng tính cả lề và đệm */
+    }
+
+    /* Thiết lập lề và đệm cho các phần tử cụ thể */
+    .search-container {
+        display: flex;
+        align-items: stretch;
+        gap: 5px;
+    }
+
+    .select-container {
+        flex: 1;
+        margin: 0px; /* Đặt margin là 0 */
+        padding: 0px; /* Đặt padding là 0 */
+        margin-right: 0 !important; /* Xóa bỏ lề bên phải */
+        margin-left: 0 !important; /* Xóa bỏ lề bên phải */
+    }
+
+    .search-btn {
+        flex-shrink: 0;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .sticky-header {
+        position: fixed;
+        top: 0;
+        background-color: #ffffff; /* Đổi màu nền tùy theo yêu cầu */
+        z-index: 1000; /* Đảm bảo header hiển thị trên các phần khác */
+        /* Thêm các thuộc tính CSS khác tùy theo yêu cầu */
+    }
+
+</style>
+
+<!-- MAIN HEADER -->
+<div id="header" class="sticky-header">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- SEARCH BAR -->
+            <div class="col-md-6">
+                <div class="header-search">
+                    <form id="formSearch">
+                        @{
+                            var categories = TempData[@TempDataNameConst.Categories] as IList<CategoryViewModel>;
+                            var productNames = TempData[@TempDataNameConst.ProductName] as IList<string>;
+                        }
+                        <div class="search-container">
+                            <div class="select-container">
+                                <select style="height: 50px;" id="categorySelect" class="input-select">
+                                    @foreach (var category in categories)
+                                    {
+                                        <option value="@category.IdCategory">@category.CategoryName</option>
+                                    }
+                                </select>
+                            </div>
+                            <div style="height: 50px;" class="select-container">
+                                <select id="txtSearch" style="width: 100%;" class="js-select2 input" multiple="multiple">
+                                    @foreach (var product in productNames)
+                                    {
+                                        <option value="@product" data-badge="">@product</option>
+                                    }
+                                </select>
+                            </div>
+                            <button style="height: 50px;" id="btnSearch" class="search-btn">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- /SEARCH BAR -->
+            <!-- ACCOUNT -->
+            <div class="col-md-3 clearfix">
+                <div class="header-ctn">
+                    <!-- Menu Toogle -->
+                    <div class="menu-toggle">
+                        <a href="#">
+                            <i class="fa fa-bars"></i>
+                            <span>Menu</span>
+                        </a>
+                    </div>
+                    <!-- /Menu Toogle -->
+                </div>
+            </div>
+            <!-- /ACCOUNT -->
+        </div>
+        <!-- row -->
+    </div>
+    <!-- container -->
+</div>
+<!-- /MAIN HEADER -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- section title -->
+            <div class="col-md-12">
+                <div class="section-title">
+                    @* tag message *@
+                    @{
+                        if (TempData[@TempDataNameConst.ErrorMessage] != null)
+                        {
+                            <div id="@TempDataNameConst.ErrorMessage" class="alert alert-danger collapse">
+                                <strong>@TempData[@TempDataNameConst.ErrorMessage]</strong>
+                            </div>
+                        }
+                    }
+                    <h3 class="title">Auctioning Products</h3>
+                </div>
+            </div>
+            <!-- /section title -->
+            <!-- Products tab & slick -->
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="products-tabs">
+                        <!-- tab -->
+                        <div id="tab1" class="tab-pane active">
+                            @if (Model != null)
+                            {
+                                <div id="renderPartialView" class="products-slick slick-initialized slick-slider" data-nav="#slick-nav-1">
+                                    <div class="slick-list draggable">
+                                        @foreach (var (index, item) in Model.Select((value, index) => (index, value)))
+                                        {
+                                            <div class="product slick-slide slick-cloned" style="width: 199px;" data-slick-index="-1" aria-hidden="true" tabindex="-1">
+                                                <div class="product-img">
+                                                    <img src="@item.Images[0].S3Uri" alt="">
+                                                    <div class="product-label">
+                                                        <span class="new">Auctioning</span>
+                                                    </div>
+                                                </div>
+                                                <div class="product-body">
+                                                    <p class="product-category">@item.CategoryName</p>
+                                                    <h3 class="product-name">@item.ProductName</h3>
+                                                    <h4 class="product-price price-format">@item.InitPrice</h4>
+                                                    <div class="product-rating">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="add-to-cart">
+                                                    <a asp-controller="Product" asp-action="Detail" asp-route-id="@item.IdProduct" class="add-to-cart-btn">Join</a>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                            <div id="slick-nav-1" class="products-slick-nav"></div>
+                        </div>
+                        <!-- /tab -->
+                    </div>
+                </div>
+            </div>
+            <!-- Products tab & slick -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+
+@* show message *@
+<script src="~/js/ShowErrorMessage.js"></script>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        var tab1Content = document.querySelector('#renderPartialView');
+
+        document.getElementById("formSearch").addEventListener("submit", function (event) {
+            event.preventDefault();
+        });
+
+        document.querySelector('#btnSearch').addEventListener('click', function () {
+
+            var categoryId = document.getElementById('categorySelect').value;
+            var selectedOptions = [];
+            var selectElement = document.getElementById('txtSearch');
+            for (var i = 0; i < selectElement.options.length; i++) {
+                if (selectElement.options[i].selected) {
+                    selectedOptions.push(selectElement.options[i].value);
+                }
+            }
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', `/Product/SearchByProductNameAndCategory/${categoryId}/${selectedOptions.length > 0 ? selectedOptions.join('&option=') : 'All'}`, true);
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.send();
+            xhr.onload = function () {
+                tab1Content.innerHTML = '';
+                tab1Content.innerHTML = xhr.responseText;
+                formatPrice();
+            };
+        });
+    });
+
+    function formatPrice() {
+        // format price
+        function formatPrice(price) {
+            return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+        }
+        var priceElements = document.querySelectorAll('.price-format');
+
+        // format price
+        priceElements.forEach(function (element) {
+            var price = parseFloat(element.textContent);
+            var formattedPrice = formatPrice(price);
+            element.textContent = formattedPrice;
+        });
+    }
+
+    formatPrice();
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        var header = $("#header");
+        var headerHeight = header.outerHeight();
+        var stickyHeaderClass = "sticky-header";
+
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > headerHeight) {
+                header.addClass(stickyHeaderClass);
+            } else {
+                header.removeClass(stickyHeaderClass);
+            }
+        });
+    });
+</script>

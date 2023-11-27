@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Utilities.ViewModel.ProductViewModel>;
+@using Utilities.Constant
+@using Utilities.ViewModel;
+
+@if (Model != null)
+{
+    @if (Model.FirstOrDefault().IsReplaceSearch == true)
+    {
+        <h4 class="title">Show recommended products</h4>
+    }
+    <div class="slick-list draggable">
+        @foreach (var (index, item) in Model.Select((value, index) => (index, value)))
+        {
+            <div class="product slick-slide slick-cloned" style="width: 199px;" data-slick-index="-1" aria-hidden="true" tabindex="-1">
+                <div class="product-img">
+                    <img src="@item.Images[0].S3Uri" alt="">
+                    <div class="product-label">
+                        <span class="new">Auctioning</span>
+                    </div>
+                </div>
+                <div class="product-body">
+                    <p class="product-category">@item.CategoryName</p>
+                    <h3 class="product-name">@item.ProductName</h3>
+                    <h4 class="product-price price-format">@item.InitPrice</h4>
+                    <div class="product-rating">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                    </div>
+                </div>
+                <div class="add-to-cart">
+                    <a asp-controller="Product" asp-action="Detail" asp-route-id="@item.IdProduct" class="add-to-cart-btn">Join</a>
+                </div>
+            </div>
+        }
+    </div>
+}

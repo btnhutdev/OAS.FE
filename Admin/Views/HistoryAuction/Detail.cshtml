@@ -1,0 +1,99 @@
+﻿@using Utilities.Constant
+@model IEnumerable<Utilities.ViewModel.HistoryAuctionViewModel>;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<main role="main" class="main-content">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-md-12 my-4">
+                        @* tag message *@
+                        @{
+                            if (TempData[@TempDataNameConst.ErrorMessage] != null)
+                            {
+                                <div id="@TempDataNameConst.ErrorMessage" class="alert alert-danger collapse">
+                                    <strong>@TempData[@TempDataNameConst.ErrorMessage]</strong>
+                                </div>
+                            }
+                        }
+                        <h2 class="h4 mb-1">My Product</h2>
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <!-- table -->
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr role="row">
+                                            <th colspan="2">Products</th>
+                                            <th colspan="3">Information</th>
+                                            <th colspan="1">Type</th>
+                                        </tr>
+                                        <tr role="row">
+                                            <th>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="all">
+                                                    <label class="custom-control-label" for="all"></label>
+                                                </div>
+                                            </th>
+                                            <th>ID</th>
+                                            <th>Bidder Name</th>
+                                            <th>Current Price</th>
+                                            <th>Max Price Auto Auction</th>
+                                            <th>Auction Type</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model == null)
+                                        {
+                                            <tr><td colspan="12" class="text-center">No Data</td></tr>
+                                        }
+                                        else
+                                        {
+                                            @foreach (var (index, item) in Model.Select((value, index) => (index, value)))
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" id="2576">
+                                                            <label class="custom-control-label" for="2576"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>@(index + 1)</td>
+                                                    <td>@item.BidderName</td>
+                                                    <td>@item.CurrentPrice</td>
+                                                    <td>@item.MaxBidPrice</td>
+                                                    <td>@item.AuctionTypeName</td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                                <a asp-controller="HistoryAuction" asp-action="Index">Back</a>
+                            </div>
+                        </div>
+                    </div> <!-- simple table -->
+                </div> <!-- end section -->
+            </div> <!-- .col-12 -->
+        </div> <!-- .row -->
+    </div> <!-- .container-fluid -->
+</main> <!-- main -->
+@* substring description long *@
+<script type="text/javascript">
+
+    var desElements = document.querySelectorAll('span.shortenedText');
+    var maxLength = 25;
+
+    desElements.forEach(function (element) {
+        var textContent = element.textContent;
+
+        if (textContent.length > maxLength) {
+            var shortenedText = textContent.substring(0, maxLength) + "...";
+            element.textContent = shortenedText;
+        }
+    });
+
+</script>
+@* show message *@
+<script src="~/js/ShowErrorMessage.js"></script>

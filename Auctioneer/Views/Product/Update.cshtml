@@ -1,0 +1,203 @@
+﻿@using Utilities.Constant
+@model Utilities.ViewModel.ProductViewModel;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="wrapper">
+    <main role="main" class="main-content">
+        <div class="container-fluid">
+            <form id="myForm" action="/Product/UpdateProduct" method="post" enctype="multipart/form-data">
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <h3 class="page-title">Update Product</h3>
+                        @* tag message *@
+                        @{
+                            if (TempData[@TempDataNameConst.SuccessMessage] != null)
+                            {
+                                <div id="@TempDataNameConst.SuccessMessage" class="alert alert-success collapse">
+                                    <strong>@TempData[@TempDataNameConst.SuccessMessage]</strong>
+                                </div>
+                            }
+                            else if (TempData[@TempDataNameConst.ErrorMessage] != null)
+                            {
+                                <div id="@TempDataNameConst.ErrorMessage" class="alert alert-danger collapse">
+                                    <strong>@TempData[@TempDataNameConst.ErrorMessage]</strong>
+                                </div>
+                            }
+                        }
+                        <div class="row mb-4">
+                            @* Thông tin sản phẩm *@
+                            <div class="col-md-6">
+                                <div class="card shadow mb-4">
+                                    <div class="card-body">
+                                        <input hidden readonly asp-for="IdProduct" id="IdProduct" name="IdProduct" class="form-control" type="text">
+                                        <div class="form-group mb-3">
+                                            <label asp-for="ProductName">Product Name</label>
+                                            <input asp-for="ProductName" required id="ProductName" name="ProductName" class="form-control" type="text">
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label asp-for="InitPrice">Initial Price</label>
+                                            <input asp-for="InitPrice" required id="InitPrice" name="InitPrice" class="form-control" type="text">
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label asp-for="StepPrice">Step Price</label>
+                                            <input asp-for="StepPrice" required id="StepPrice" name="StepPrice" class="form-control" type="text">
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label asp-for="StartDate">Start Date</label>
+                                            <input asp-for="StartDate" required id="StartDate" name="StartDate" class="form-control" type="date">
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label asp-for="EndDate">End Date</label>
+                                            <input asp-for="EndDate" required id="EndDate" name="EndDate" class="form-control" type="date">
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label asp-for="CategoryId">Category</label>
+                                            <select asp-for="CategoryId" id="CategoryId" name="CategoryId" class="form-control select2">
+                                                <option value="1">Smart Phone</option>
+                                                <option value="2">Laptop</option>
+                                                <option value="3">Motobike</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label asp-for="Description">Description</label>
+                                            <textarea asp-for="Description" required id="Description" name="Description" class="form-control" rows="4"></textarea>
+                                        </div>
+                                        <button type="submit" class="btn mb-2 btn-primary">Update</button>
+                                        <a asp-controller="Product" required asp-action="Index" class="btn mb-2 btn-secondary" type="button">Back</a>
+                                    </div>
+                                </div>
+                            </div>
+                            @*  Hình ảnh *@
+                            <div class="col-md-6">
+                                <div class="card shadow mb-4">
+                                    <div class="card-header">
+                                        <strong>Images</strong>
+                                    </div>
+                                    <div class="card-body">
+                                        <div for="ImageFiles" id="FileImage"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+</div>
+
+<script src='~/template/js/uppy.min.js'></script>
+<script src="~/template/js/apps.js"></script>
+
+<script>
+
+    // array image uploaded
+    const uploadedFiles = [];
+
+    // get element div upload image
+    var uptarg = document.getElementById('FileImage');
+
+    // create uppy dashboard upload image
+    var uppy = Uppy.Core().use(Uppy.Dashboard,
+        {
+            inline: true,
+            target: uptarg,
+            proudlyDisplayPoweredByUppy: false,
+            theme: 'light',
+            width: 770,
+            height: 210,
+            plugins: ['Webcam']
+        });
+
+    // post file to uppy hosting
+    uppy.use(Uppy.Tus,
+        {
+            endpoint: 'https://master.tus.io/files/'
+        });
+
+    // add image uploaded to array
+    uppy.on('complete', (result) => {
+        uploadedFiles.push(...result.successful.map(file => file.data));
+    });
+
+    // load image uploaded to dashboard uppy
+    function addImageToUppyDashboard(imageUrl) {
+
+        fetch(imageUrl)
+            .then(response => response.blob())
+            .then(blob => {
+
+                // get file image on the top array
+                const filename = imageUrl.split('/').pop();
+
+                // add image to uppy
+                uppy.addFile({
+                    name: filename,
+                    type: blob.type,
+                    data: blob
+                });
+            });
+    }
+
+    // array image uploaded from controller
+    const imageNames = [];
+
+    // get data from model controller
+    var productId = @Html.Raw(Json.Serialize(Model.IdProduct));
+    var images = @Html.Raw(Json.Serialize(Model.Images));
+
+    // create image
+    images.forEach(item => {
+
+        var imageId = item.idImage;
+        var imageExtension = item.extension;
+        var imageName = productId + "_" + imageId + imageExtension;
+
+        imageNames.push(imageName);
+
+    });
+
+    // path image to wwwrooot/imgProduct
+    const baseUrl = '/imgProduct/';
+
+    // loop array image and add to Uppy Dashboard
+    imageNames.forEach(name => {
+        const imageUrl = baseUrl + name;
+        addImageToUppyDashboard(imageUrl);
+    });
+
+    // remove event submit form, create event post and images from uppy
+    document.querySelector('#myForm').addEventListener('submit', function (event) {
+
+        event.preventDefault();
+
+        const form = document.getElementById('myForm');
+        const formData = new FormData(form);
+
+        // add images uploaded
+        uploadedFiles.forEach(fileData => {
+            formData.append('ImageFiles', fileData);
+        });
+
+        // post data and images
+        fetch(form.action, {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Redirect page
+                const redirectUrl = location.origin + data.redirectUrl;
+                location.href = redirectUrl;
+            });
+
+    });
+
+</script>
+
+@* show message *@
+<script src="~/js/ShowSuccessMessage.js"></script>
+<script src="~/js/ShowErrorMessage.js"></script>

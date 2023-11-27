@@ -1,0 +1,417 @@
+﻿@model Utilities.ViewModel.DetailProductBidderViewModel
+@using Utilities.Constant
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
+
+<!-- SECTION -->
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <!-- main img -->
+            <div class="col-md-5 col-md-push-2">
+                <div id="product-main-img">
+                    @if (Model != null && Model.Images != null)
+                    {
+                        foreach (var item in Model.Images)
+                        {
+                            <div class="product-preview">
+                                <img src="@item.S3Uri" alt="">
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            <!-- /main img -->
+            <!-- thumb imgs -->
+            <div class="col-md-2  col-md-pull-5">
+                <div id="product-imgs">
+                    @if (Model != null && Model.Images != null)
+                    {
+                        foreach (var item in Model.Images)
+                        {
+                            <div class="product-preview">
+                                <img src="@item.S3Uri" alt="">
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            <!-- /thumb imgs -->
+            <form id="bidForm">
+                <!-- Product details -->
+                <input type="hidden" id="productId" value="@Model.IdProduct" />
+                <input type="hidden" id="auctionId" value="@Model.IdAuction" />
+                <input type="hidden" id="userId" value="@TempData[@TempDataNameConst.BidderIdMessage]" />
+                <div class="col-md-5">
+                    <div class="product-details">
+                        <h2 id="auctionTime" class="product-price"></h2>
+                        <h2 class="product-name">@Model.ProductName</h2>
+                        <div>
+                            <div class="product-rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h6 class="product-price hidden">Current Price: <span id="spanCurrentPriceHidden" class="price-value">@Model.PriceCurrentMax</span></h6>
+                            <h6 class="product-price">Current Price: <span id="spanCurrentPrice" class="price-value price-format">@Model.PriceCurrentMax</span></h6>
+
+                            <h6 class="product-name hidden" style="color: #D10024;">My Price: <span id="spanMyPriceHidden" class="price-value">0</span></h6>
+                            <h6 class="product-name" style="color: #D10024;">My Price: <span id="spanMyPrice" class="price-value price-format">0</span></h6>
+
+                            <h6 class="product-name">
+                                Init Price: <span id="spanInitPrice" class="price-value price-format">@Model.InitPrice</span>
+                            </h6>
+
+                            <h6 class="product-name hidden">
+                                Step Price: <span id="spanStepPriceHidden" class="price-value">@Model.StepPrice</span>
+                            </h6>
+                            <h6 class="product-name">
+                                Step Price: <span id="spanStepPrice" class="price-value price-format">@Model.StepPrice</span>
+                            </h6>
+
+                        </div>
+                        <p id="dateStartDate">Start Date: @Model.StartDate</p>
+                        <p>Category: @Model.CategoryName</p>
+                        <p>@Model.Description</p>
+                        <div class="product-options">
+                            <label>
+                                Auction Type
+                                <select class="input-select" style="width:145px;" id="auctionTypeSelect">
+                                    <option value="0">Manual</option>
+                                    <option value="1">Automatic</option>
+                                </select>
+                            </label>
+                            <label id="divPriceManualAuction" style="margin-top: 5%">
+                                Price
+                                <select id="priceManualAuctionSelect" class="input-select" style="width:200px;"></select>
+                            </label>
+                        </div>
+                        <div id="divMaxPriceAutoAuction" class="add-to-cart" style="width: 240px;">
+                            Max Price
+                            <div class="input-number">
+                                <input type="text" id="maxPriceAutoAuction" value="0">
+                            </div>
+                        </div>
+                        <div class="add-to-cart">
+                            <button type="button" class="add-to-cart-btn" id="btnManualAuction">Manual Auction</button>
+                            <button type="button" class="add-to-cart-btn" id="btnAutoAuction">Auto Auction</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Product details -->
+            </form>
+            <div class="mt-3">
+                <ul id="history"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /SECTION -->
+<!-----------------------script----------------------->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.21/signalr.min.js"></script>
+<script>
+
+    const elements = {
+        btnManualAuction: document.getElementById('btnManualAuction'),
+        btnAutoAuction: document.getElementById('btnAutoAuction'),
+        auctionTypeSelect: document.getElementById('auctionTypeSelect'),
+        priceSelect: document.getElementById('priceManualAuctionSelect'),
+        priceValueElement: document.getElementById('spanCurrentPrice'),
+        priceValueElementHidden: document.getElementById('spanCurrentPriceHidden'),
+        stepPriceElement: document.getElementById('spanStepPrice'),
+        stepPriceElementHidden: document.getElementById('spanStepPriceHidden'),
+        remainingTimeElement: document.getElementById('auctionTime'),
+        auctionId: document.getElementById('auctionId').value,
+        productId: document.getElementById('productId').value,
+        bidderId: document.getElementById('userId').value,
+        spanMyPrice: document.getElementById('spanMyPrice'),
+        spanMyPriceHidden: document.getElementById('spanMyPriceHidden'),
+        txtMaxPriceAutoAuction: document.getElementById('maxPriceAutoAuction'),
+        divMaxPriceAutoAuction: document.getElementById('divMaxPriceAutoAuction'),
+        divPriceManualAuction: document.getElementById('divPriceManualAuction')
+    };
+
+    const steps = [1, 2, 3, 5, 10];
+    const connection = new signalR.HubConnectionBuilder().withUrl("/AuctionHub").build();
+
+    // join group
+    function joinGroupSignalR() {
+        var auctionId = elements.auctionId;
+        connection.invoke("JoinGroup", auctionId).catch(function (err) {
+            return console.error('Join Group error', err.toString());
+        });
+    }
+
+    function connectSignalR() {
+        // start connect to hub and join group
+        connection.start().then(function () {
+            joinGroupSignalR();
+        }).catch(function (err) {
+            return console.error('Connect error ', err.toString());
+        });
+    }
+
+    async function isProductAuctioning(auctionId) {
+        const response = await fetch(`/Product/IsProductAuctioning/${auctionId}`);
+        return response.status;
+    }
+
+    async function checkAutoBidder(auctionId) {
+        await fetch(`/Product/CheckAutoBidder/${auctionId}`);
+    }
+
+    function updateSelectOptions(currPrice) {
+
+        var currentPrice;
+
+        if (currPrice == null || currPrice == undefined) {
+            currentPrice = parseFloat(elements.priceValueElementHidden.textContent);
+        }
+        else {
+            currentPrice = currPrice;
+        }
+
+        var priceSelect = elements.priceSelect;
+        var stepPrice = parseFloat(elements.stepPriceElementHidden.textContent);
+        var steps = [1, 2, 3, 4, 5];
+
+        // Clear existing options
+        priceSelect.innerHTML = "";
+
+        // Populate select options and update original value
+        for (const step of steps) {
+            const optionValue = currentPrice + (stepPrice * step);
+            const option = new Option(optionValue);
+            priceSelect.add(option);
+        }
+    }
+
+    async function manualAuctionClickHandler() {
+
+        if (parseFloat(elements.spanMyPriceHidden.textContent) < parseFloat(elements.priceValueElementHidden.textContent)) {
+
+            const selectedOption = elements.priceSelect.options[elements.priceSelect.selectedIndex];
+            const stepPrice = parseFloat(elements.stepPriceElementHidden.textContent);;
+            var currentPrice = 0;
+            var myPrice = 0;
+            var auctionType = 0;
+            var myMaxPriceAuto = 0;
+
+            if (elements.auctionTypeSelect.value === '0') {
+
+                currentPrice = parseFloat(selectedOption.text);
+                myPrice = currentPrice;
+            }
+            else {
+                currentPrice = parseFloat(elements.priceValueElementHidden.textContent) + stepPrice;
+                myPrice = currentPrice;
+                auctionType = 1;
+                myMaxPriceAuto = parseFloat(elements.txtMaxPriceAutoAuction.value);
+            }
+
+            const status = await isProductAuctioning(elements.auctionId);
+
+            if (status === 200) {
+
+                connection.invoke("SendMessage", elements.auctionId, elements.productId, elements.bidderId,
+                    parseFloat(currentPrice), parseFloat(myPrice), parseInt(auctionType), parseFloat(myMaxPriceAuto), parseFloat(stepPrice));
+
+                elements.priceValueElementHidden.value = currentPrice;
+
+                updateSelectOptions(currentPrice);
+
+                await checkAutoBidder(elements.auctionId);
+
+                var formated = formatPrice(currentPrice);
+                elements.priceValueElement.textContent = formated;
+            }
+        }
+    }
+
+    function receiveMessageFromSignalR() {
+
+        connection.on("ReceiveMessage", function (auctionId, productId, bidderId, currentPrice, myPrice, auctionType, myMaxPriceAuto, stepPrice) {
+
+            var encodeMsg1 = `auctionId: ${auctionId}, productId: ${productId}, bidderId: ${bidderId} auctionType: ${auctionType} `;
+            var encodeMsg2 = `myPrice: ${myPrice}, currentPrice: ${currentPrice}, myMaxPriceAuto: ${myMaxPriceAuto}, stepPrice: ${stepPrice} `;
+            var encodeMsg = encodeMsg1 + encodeMsg2;
+            const li = document.createElement("li");
+            li.textContent = encodeMsg;
+            // document.getElementById('history').appendChild(li);
+            elements.priceValueElementHidden.textContent = currentPrice;
+
+            var formated = formatPrice(currentPrice);
+            elements.priceValueElement.textContent = formated;
+            updateSelectOptions(parseFloat(elements.priceValueElementHidden.textContent)); // Initialize options
+
+            if (elements.bidderId === bidderId) {
+
+                if (auctionType == 1) {
+
+                    // enable button Auto Auction
+                    elements.btnAutoAuction.classList.remove('hidden');
+                    elements.btnAutoAuction.disabled = false;
+
+                    divMaxPriceAutoAuction.classList.remove('hidden');
+                    divPriceManualAuction.classList.add('hidden');
+
+                    // disable button Manual Auction
+                    elements.btnManualAuction.classList.add('hidden');
+                    elements.btnManualAuction.disabled = true;
+
+                    auctionTypeSelect.value = '1';
+
+                    elements.txtMaxPriceAutoAuction.value = myMaxPriceAuto;
+                    elements.spanMyPriceHidden.textContent = myPrice;
+
+                    var formatedMyPrice = formatPrice(myPrice);
+                    elements.spanMyPrice.textContent = formatedMyPrice;
+                }
+                else {
+                    elements.spanMyPriceHidden.textContent = myPrice;
+
+                    var formatedMyPrice = formatPrice(myPrice);
+                    elements.spanMyPrice.textContent = formatedMyPrice;
+                }
+            }
+        });
+    }
+
+    function setSelectAuctionType() {
+
+        // disable button Auto Auction
+        elements.btnAutoAuction.classList.add('hidden');
+        elements.btnAutoAuction.disabled = true;
+
+        divMaxPriceAutoAuction.classList.add('hidden');
+
+        // enable button Manual Auction
+        elements.btnManualAuction.classList.remove('hidden');
+        elements.btnManualAuction.disabled = false;
+
+        elements.auctionTypeSelect.addEventListener('change', function () {
+            if (elements.auctionTypeSelect.value === '0') {
+
+                // enable button Manual Auction
+                elements.btnManualAuction.classList.remove('hidden');
+                elements.btnManualAuction.disabled = false;
+
+                divMaxPriceAutoAuction.classList.add('hidden');
+                divPriceManualAuction.classList.remove('hidden');
+
+                // disable button Auto Auction
+                elements.btnAutoAuction.classList.add('hidden');
+                elements.btnAutoAuction.disabled = true;
+
+            } else if (elements.auctionTypeSelect.value === '1') {
+
+                // enable button Auto Auction
+                elements.btnAutoAuction.classList.remove('hidden');
+                elements.btnAutoAuction.disabled = false;
+
+                divMaxPriceAutoAuction.classList.remove('hidden');
+                divPriceManualAuction.classList.add('hidden');
+
+                // disable button Manual Auction
+                elements.btnManualAuction.classList.add('hidden');
+                elements.btnManualAuction.disabled = true;
+            }
+        });
+    }
+
+    function formatPrice(price) {
+        var temp = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        return temp + ' ₫';
+    }
+
+    function extractNumberFromString(str) {
+        var numberString = str.replace(/[^\d.-]/g, '');
+        return parseFloat(numberString);
+    }
+
+    function updateFormatPrice() {
+        var priceElements = document.querySelectorAll('.price-format');
+
+        priceElements.forEach(function (element) {
+            var priceString = element.textContent; // Chuỗi giá trị hiển thị
+            var priceValue = extractNumberFromString(priceString);
+            var formattedPrice = formatPrice(priceValue);
+            element.textContent = formattedPrice;
+        });
+    }
+
+    function formatDateTime(dateTimeString) {
+        var date = new Date(dateTimeString);
+
+        var day = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
+
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var formattedMinutes = minutes.toString().padStart(2, '0');
+        var formattedDateTime = `${day}/${month}/${year} ${hours}:${formattedMinutes}`;
+        return formattedDateTime;
+    }
+
+    function updateFormattedDateTime(elementId) {
+        var element = document.getElementById(elementId);
+        if (element) {
+            var originalDateTime = element.textContent;
+            var formattedDateTime = formatDateTime(originalDateTime);
+            element.textContent = 'Start Date: ' + formattedDateTime;
+        }
+    }
+
+    function initialize() {
+
+        setSelectAuctionType();
+        updateFormatPrice();
+        updateFormattedDateTime('dateStartDate');
+
+        elements.btnManualAuction.addEventListener('click', manualAuctionClickHandler);
+        elements.btnAutoAuction.addEventListener('click', manualAuctionClickHandler);
+
+        connectSignalR();
+
+        setInterval(() => {
+
+            const datetemp = @Html.Raw(Json.Serialize(Model.StartDate));
+            var startTime = new Date(datetemp);
+            var durationMinutes = @Html.Raw(Json.Serialize(Model.Duration));
+
+            const currentTime = new Date(); // Current time (Client time zone)
+            const elapsedTimeInSeconds = Math.floor((currentTime - startTime) / 1000);
+            const remainingTimeInSeconds = durationMinutes * 60 - elapsedTimeInSeconds;
+
+            if (remainingTimeInSeconds <= 0) {
+                elements.btnManualAuction.disabled = true;
+                elements.btnAutoAuction.disabled = true;
+                elements.remainingTimeElement.textContent = "Auction has ended";
+            } else {
+                const remainingHours = Math.floor(remainingTimeInSeconds / 3600);
+                const remainingMinutes = Math.floor((remainingTimeInSeconds % 3600) / 60);
+                const remainingSeconds = Math.floor(remainingTimeInSeconds % 60);
+                elements.remainingTimeElement.textContent = `${remainingHours} hours ${remainingMinutes} minutes ${remainingSeconds} seconds`;
+            }
+        }, 1000);
+
+        receiveMessageFromSignalR();
+        updateSelectOptions(null);
+    }
+
+    initialize();
+
+</script>

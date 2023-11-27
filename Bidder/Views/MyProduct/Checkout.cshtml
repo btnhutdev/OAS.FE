@@ -1,0 +1,157 @@
+﻿@model Utilities.ViewModel.PaymentInformationModel
+@using Utilities.Constant
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- BREADCRUMB -->
+<div id="breadcrumb" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="breadcrumb-header">Checkout</h3>
+                <ul class="breadcrumb-tree">
+                    <li><a asp-action="Index" asp-controller="MyProduct">Home</a></li>
+                    <li class="active">Checkout</li>
+                </ul>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /BREADCRUMB -->
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <form action="/MyProduct/Payment" method="POST">
+            <!-- row -->
+            <div class="row">
+                @{
+                    if (TempData[@TempDataNameConst.ErrorMessage] != null)
+                    {
+                        <div id="@TempDataNameConst.ErrorMessage" class="alert alert-danger collapse">
+                            <strong>@TempData[@TempDataNameConst.ErrorMessage]</strong>
+                        </div>
+                    }
+                }
+                <div class="col-md-7">
+                    <!-- Billing Details -->
+                    <input hidden value="@TempData[TempDataNameConst.ProductId]" type="text" asp-for="IdProduct" name="IdProduct" readonly />
+                    <div class="billing-details">
+                        <div class="section-title">
+                            <h3 class="title">Billing address</h3>
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="FirstName" required class="input" type="text" name="FirstName" placeholder="First Name">
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="LastName" required class="input" type="text" name="LastName" placeholder="Last Name">
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="Email" required class="input" type="text" name="Email" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="Telephone" required class="input" type="text" name="Telephone" placeholder="Telephone">
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="ShipingAddress" required class="input" type="text" name="ShipingAddress" placeholder="Shiping Address">
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="ZIPCode" required class="input" type="text" name="ZIPCode" placeholder="ZIP Code">
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="OrderType" required class="input" type="text" name="OrderType" value="Online Payment">
+                        </div>
+                    </div>
+                    <!-- /Billing Details -->
+                    <!-- Shiping Details -->
+                    <div class="shiping-details">
+                        <div class="section-title">
+                            <h3 class="title">Order Notes</h3>
+                        </div>
+                    </div>
+                    <!-- /Shiping Details -->
+                    <!-- Order notes -->
+                    <div class="order-notes">
+                        <textarea asp-for="OrderNotes" required name="OrderNotes" class="input" placeholder="Order Notes"></textarea>
+                    </div>
+                    <!-- /Order notes -->
+                </div>
+                <!-- Order Details -->
+                <div class="col-md-5 order-details">
+                    <div class="section-title text-center">
+                        <h3 class="title">Your Order</h3>
+                    </div>
+                    <div class="order-summary">
+                        <div class="order-col">
+                            <div><strong>PRODUCT</strong></div>
+                            <div><strong>TOTAL</strong></div>
+                        </div>
+                        <div class="order-col">
+                            <div>@TempData[TempDataNameConst.ProductName]</div>
+                            <input hidden value="@TempData[TempDataNameConst.ProductPrice]"
+                                   type="text" asp-for="TotalPrice" name="TotalPrice" readonly />
+                            <div><strong class="order-total price-format">@TempData[TempDataNameConst.ProductPrice]</strong></div>
+                        </div>
+                        <div class="order-col">
+                            <div>Shiping</div>
+                            <div><strong>FREE</strong></div>
+                        </div>
+                        <div class="order-col">
+                            <div><strong>TOTAL</strong></div>
+                            <div><strong class="order-total price-format">@TempData[TempDataNameConst.ProductPrice]</strong></div>
+                        </div>
+                    </div>
+                    <div class="caption">
+                        <p>Our payment terms</p>
+                        <p>Payment Information: We are not responsible for any errors caused by inaccurate or omission of information.</p>
+                        <p>Information Security: We are committed to keeping your payment information secure.</p>
+                        <p>Order Confirmation: Please double check the information in the confirmation and contact us if there are any errors.</p>
+                        <p>Cancellation of transactions: We may decline or cancel any transaction depending on our policy.</p>
+                        <p>Refund Policy: Our refund policy is regulated by specific regulations.</p>
+                    </div>
+                    <div class="input-checkbox">
+                        <input required type="checkbox" id="terms">
+                        <label for="terms">
+                            <span></span>
+                            I've read and accept the <a href="#">terms & conditions</a>
+                        </label>
+                    </div>
+                    <button type="submit" class="primary-btn order-submit">Place order</button>
+                </div>
+                <!-- /Order Details -->
+            </div>
+            <!-- /row -->
+        </form>
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->
+<script src="~/js/ShowErrorMessage.js"></script>
+<script>
+    function formatPrice(price) {
+        var temp = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        return temp + ' ₫';
+    }
+
+    function extractNumberFromString(str) {
+        var numberString = str.replace(/[^\d.-]/g, '');
+        return parseFloat(numberString);
+    }
+
+    function updateFormatPrice() {
+        var priceElements = document.querySelectorAll('.price-format');
+
+        priceElements.forEach(function (element) {
+            var priceString = element.textContent; // Chuỗi giá trị hiển thị
+            var priceValue = extractNumberFromString(priceString);
+            var formattedPrice = formatPrice(priceValue);
+            element.textContent = formattedPrice;
+        });
+    }
+    updateFormatPrice();
+</script>

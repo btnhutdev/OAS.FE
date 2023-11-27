@@ -1,0 +1,173 @@
+﻿@model Utilities.ViewModel.DetailProductBidderViewModel
+@using Utilities.Constant
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
+
+<!-- SECTION -->
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <!-- main img -->
+            <div class="col-md-5 col-md-push-2">
+                <div id="product-main-img">
+                    @if (Model != null && Model.Images != null)
+                    {
+                        foreach (var item in Model.Images)
+                        {
+                            <div class="product-preview">
+                                <img src="@item.S3Uri" alt="">
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            <!-- /main img -->
+            <!-- thumb imgs -->
+            <div class="col-md-2  col-md-pull-5">
+                <div id="product-imgs">
+                    @if (Model != null && Model.Images != null)
+                    {
+                        foreach (var item in Model.Images)
+                        {
+                            <div class="product-preview">
+                                <img src="@item.S3Uri" alt="">
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            <!-- /thumb imgs -->
+            <form id="bidForm">
+                <!-- Product details -->
+                <input type="hidden" id="productId" value="@Model.IdProduct" />
+                <input type="hidden" id="userId" value="@TempData[@TempDataNameConst.BidderIdMessage]" />
+                <div class="col-md-5">
+                    <div class="product-details">
+                        <h2 id="auctionTime" class="product-price"></h2>
+                        <h2 class="product-name">@Model.ProductName</h2>
+                        <div>
+                            <h6 class="product-name" style="color: #D10024;">Price: <span class="price-value price-format">@Model.PriceCurrentMax</span> VND</h6>
+                            @{
+                                if (Model.IsPayment == true)
+                                {
+                                    <h6 class="product-name" style="color: green;">
+                                        Payment:
+                                        <span style="color: green;" class="price-value">Paid</span>
+                                    </h6>
+                                }
+                                else
+                                {
+                                    <h6 class="product-name" style="color: #D10024;">
+                                        Payment:
+                                        <span style="color: #D10024;" class="price-value">Unpaid</span>
+                                    </h6>
+                                }
+                            }
+                        </div>
+                        <p id="dateStartDate">Start Date Auction: @Model.StartDate</p>
+                        <p id="dateEndDate">End Date Auction: @Model.EndDate</p>
+                        <p>Category: @Model.CategoryName</p>
+                        <p>Auction Type: @Model.AuctionType</p>
+                        <p>@Model.Description</p>
+                        <div class="add-to-cart">
+                            @{
+                                if (Model.IsPayment == false)
+                                {
+                                    <button asp-action="Checkout" asp-controller="MyProduct" asp-route-productId="@Model.IdProduct" type="submit" class="add-to-cart-btn" id="btnCheckout">Checkout</button>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+                <!-- /Product details -->
+            </form>
+        </div>
+    </div>
+</div>
+<!-- /SECTION -->
+<script>
+
+    function formatPrice(price) {
+        var temp = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        return temp + ' ₫';
+    }
+
+    function extractNumberFromString(str) {
+        var numberString = str.replace(/[^\d.-]/g, '');
+        return parseFloat(numberString);
+    }
+
+    function updateFormatPrice() {
+        var priceElements = document.querySelectorAll('.price-format');
+
+        priceElements.forEach(function (element) {
+            var priceString = element.textContent; // Chuỗi giá trị hiển thị
+            var priceValue = extractNumberFromString(priceString);
+            var formattedPrice = formatPrice(priceValue);
+            element.textContent = formattedPrice;
+        });
+    }
+
+    function formatDateTime(dateTimeString) {
+        var date = new Date(dateTimeString);
+
+        var day = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
+
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+
+        var formattedDateTime = `${day}/${month}/${year} ${hours}:${minutes}`;
+        return formattedDateTime;
+    }
+
+    function formatDateTime(dateTimeString) {
+        var date = new Date(dateTimeString);
+
+        var day = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
+
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+
+        var formattedMinutes = minutes.toString().padStart(2, '0');
+        var formattedDateTime = `${day}/${month}/${year} ${hours}:${formattedMinutes}`;
+        return formattedDateTime;
+    }
+
+    function updateFormattedEndDate(elementId) {
+        var element = document.getElementById(elementId);
+        if (element) {
+            var originalDateTime = element.textContent;
+            var formattedDateTime = formatDateTime(originalDateTime);
+            element.textContent = 'End Date Auction: ' + formattedDateTime;
+        }
+    }
+
+    function updateFormattedStartDate(elementId) {
+        var element = document.getElementById(elementId);
+        if (element) {
+            var originalDateTime = element.textContent;
+            var formattedDateTime = formatDateTime(originalDateTime);
+            element.textContent = 'Start Date Auction: ' + formattedDateTime;
+        }
+    }
+
+    function initialize() {
+        updateFormattedEndDate('dateEndDate');
+        updateFormattedStartDate('dateStartDate');
+        updateFormatPrice();
+    }
+
+    initialize();
+</script>
