@@ -29,7 +29,7 @@ namespace Bidder.Controllers
         {
             _configuration = configuration;
             _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri(_configuration["ApiGetwayBaseAddress"]);
+            _httpClient.BaseAddress = new Uri(_configuration["ApiGatewayBaseAddress"]);
             _vnPayService = vnPayService;
         }
         #endregion

@@ -23,7 +23,7 @@ namespace Auctioneer.Controllers
         {
             _configuration = configuration;
             _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri(_configuration["ApiGetwayBaseAddress"]);
+            _httpClient.BaseAddress = new Uri(_configuration["ApiGatewayBaseAddress"]);
             _webHostEnvironment = webHostEnvironment;
             _logger = logger;
         }

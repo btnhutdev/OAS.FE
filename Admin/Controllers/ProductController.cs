@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System.Net.Http;
 using System;
 using System.Threading.Tasks;
@@ -25,7 +27,7 @@ namespace Admin.Controllers
         {
             _configuration = configuration;
             _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri(_configuration["ApiGetwayBaseAddress"]);
+            _httpClient.BaseAddress = new Uri(_configuration["ApiGatewayBaseAddress"]);
         }
         #endregion
 

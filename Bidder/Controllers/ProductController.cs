@@ -34,7 +34,7 @@ namespace Bidder.Controllers
             _redisConnection = connectionMultiplexer;
             _configuration = configuration;
             _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri(_configuration["ApiGetwayBaseAddress"]);
+            _httpClient.BaseAddress = new Uri(_configuration["ApiGatewayBaseAddress"]);
             _webHostEnvironment = webHostEnvironment;
         }
         #endregion

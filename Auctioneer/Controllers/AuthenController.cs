@@ -24,7 +24,7 @@ namespace Auctioneer.Controllers
         {
             _configuration = configuration;
             _httpAuthenClient = new HttpClient();
-            _httpAuthenClient.BaseAddress = new Uri(_configuration["ApiGetwayBaseAddress"]);
+            _httpAuthenClient.BaseAddress = new Uri(_configuration["ApiGatewayBaseAddress"]);
         }
         #endregion
 
