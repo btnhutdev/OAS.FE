@@ -1,9 +1,9 @@
 .vs/*
-Admin/obj
-Admin/bin
-Auctioneer/obj
-Auctioneer/bin
-Bidder/obj
-Bidder/bin
-Utilities/obj
-Utilities/bin
+src/Admin/obj
+src/Admin/bin
+src/Auctioneer/obj
+src/Auctioneer/bin
+src/Bidder/obj
+src/Bidder/bin
+src/Utilities/obj
+src/Utilities/bin
