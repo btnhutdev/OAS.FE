@@ -1,5 +1,4 @@
-.vs
-.vs/OAS.FE
+.vs/*
 Admin/obj
 Admin/bin
 Auctioneer/obj
