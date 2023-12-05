@@ -49,7 +49,7 @@ Users can post products for auction.<br>
 Users can also participate in product auctions.<br>
 After successfully bidding on the product, users can make online payments on the system.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right"><a href="#readme-top">(back to top)</a></p>
 
 ### Built With
 The project is built based on the following frameworks/libraries:
