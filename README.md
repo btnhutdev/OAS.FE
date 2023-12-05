@@ -119,9 +119,22 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
 
 <!-- DEMO -->
 ## Demo
+* Bidder Login
 <p align="center">
-  <img src="" width=1000><br/>
-  <i>Hangfire Dashboard</i>
+  <img src="img/BidderLogin.png" width=800><br/>
+  <i>Bidder Login</i>
+</p>
+
+* Auctioneer Login
+<p align="center">
+  <img src="img/AuctioneerLogin.png" width=800><br/>
+  <i>Auctioneer Login</i>
+</p>
+
+* Admin Login
+<p align="center">
+  <img src="img/AdminLogin.png" width=800><br/>
+  <i>Admin Login</i>
 </p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
