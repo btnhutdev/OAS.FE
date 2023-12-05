@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\img\Admin.png" />
     <Content Remove="wwwroot\lib\bootstrap\LICENSE" />
     <Content Remove="wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt" />
     <Content Remove="wwwroot\lib\jquery-validation\LICENSE.md" />
@@ -48,6 +49,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="wwwroot\img\Admin.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="wwwroot\lib\bootstrap\LICENSE">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

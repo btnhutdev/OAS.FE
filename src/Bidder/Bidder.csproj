@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\img\Bidder.png" />
     <Content Remove="wwwroot\lib\bootstrap\LICENSE" />
     <Content Remove="wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt" />
     <Content Remove="wwwroot\lib\jquery-validation\LICENSE.md" />
@@ -82,6 +83,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="wwwroot\img\Bidder.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="wwwroot\lib\bootstrap\LICENSE">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
