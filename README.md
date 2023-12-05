@@ -26,8 +26,12 @@
       <detail>
         <ul>
           <li><a href="#demo">Demo Login</a></li>
-          <li><a href="#demo-home-page">Demo Home Page</a></li>         
-          <li><a href="#demo-admin-login">Demo Admin Login</a></li>     
+          <li><a href="#demo-home-page">Home Page</a></li>         
+          <li><a href="#demo-approves-and-rejects-product">Approves and Rejects Product</a></li>     
+          <li><a href="#demo-product-bidding">Product Bidding</a></li>
+          <li><a href="#demo-payment">Payment</a></li>
+          <li><a href="#demo-search-product">Search product</a></li>
+          <li><a href="#demo-email-notifications">Email notifications</a></li>
         </ul>
       </detail></li>
     <li><a href="#license">License</a></li>
@@ -124,6 +128,8 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
 * Access the address http://localhost:5030 to enter the Bidder interface
 * **Note**: The ports above are default, you can customize them in the Properties\launchSettings.json file of each project.
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <!-- DEMO -->
 ## Demo
 * Bidder Login
@@ -144,6 +150,8 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
   <i>Admin Login</i>
 </p>
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Demo Home Page
 * Auctioneer Home Page
 <p align="center">
@@ -163,6 +171,9 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
   <i>Admin Home</i>
 </p>
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Demo Approves and Rejects Product
 * Admin approves/rejects auction products
 <p align="center">
   <img src="img/Admin/Home1.png" width=1000><br/>
@@ -181,6 +192,9 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
   <i>Products are being auctioned</i>
 </p>
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Demo Product Bidding
 * Some auction rules (In the context of the current system):
   * When the admin approves the product posted by Auctioneer, that product will be opened for public auction to everyone.
   * When the auction starts, the product price will be the starting price set by the product owner.
@@ -222,6 +236,9 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
   <i>The products won the auction</i>
 </p>
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Demo Payment
 * Bidder - When clicking on the product, detailed information about the product and whether it has been paid will be displayed.
 <p align="center">
   <img src="img/Bidder/Payment2.png" width=1000><br/>
@@ -234,6 +251,9 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
   <i>Payment process</i>
 </p>
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Demo Search Product
 * Bidder - Search for products with open auctions
   * Function to search all products.
   * Search by exact name, search by approximate name.
