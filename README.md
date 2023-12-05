@@ -21,7 +21,8 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
+    <li><a href="#usage">Usage</a></li>## Demo
+    <li><a href="#Demo">Demo</a></li>
     <li><a href="#license">License</a></li>
   </ol>
 </details>
@@ -107,17 +108,17 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
 <!-- USAGE EXAMPLES -->
 ## Usage
 * Right-click Solution in the Solution Explorer window, select Properties, select Multiple startup projects. Select action start for projects:
-  * ApiGateway
-  * Authen.API
-  * Payment.API
-  * Product.API
-  * Search.API
+  * Admin
+  * Auctioneer
+  * Bidder
 * You can run the project in local by clicking Start in Visual Studio.
-* **Note**: I have set "launchBrowser": false in projects Authen, Payment, Search, ApiGateway.
-  * So when running, it will not open a browser window.
-  * If you want to open a browser window, set "launchBrowser": true.
-* You can run the project in local by clicking Start in Visual Studio.
-* You can access the address **localhost:port\dashboard** to enter the Hangfire interface to manage Tasks.
+* Access the address http://localhost:5000 to enter the Admin interface 
+* Access the address http://localhost:5035 to enter the Auctioneer interface
+* Access the address http://localhost:5030 to enter the Bidder interface
+* **Note**: The ports above are default, you can customize them in the Properties\launchSettings.json file of each project.
+
+<!-- DEMO -->
+## Demo
 <p align="center">
   <img src="" width=1000><br/>
   <i>Hangfire Dashboard</i>
