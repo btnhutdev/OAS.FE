@@ -162,7 +162,8 @@ namespace Bidder.Controllers
         #region PushRecordToRedis
         public async Task PushRecordToRedis(Message message)
         {
-            var hubUrl = @"http://localhost:40754/AuctionHub";
+            //var hubUrl = @"http://localhost:40754/AuctionHub"; old config
+            var hubUrl = @"http://localhost:5030/AuctionHub";
             var redisConnectionString = @"127.0.0.1:6379";
 
             SignalRAndRedisClient signalRAndRedisClient = new SignalRAndRedisClient(hubUrl, redisConnectionString);

@@ -8,11 +8,11 @@
     }
   },
   "profiles": {
-    "Bidder": {
+    "Client": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:5030",
+      "applicationUrl": "http://localhost:5030", // Url run in local
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
