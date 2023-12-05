@@ -121,20 +121,119 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
 ## Demo
 * Bidder Login
 <p align="center">
-  <img src="img/BidderLogin.png" width=800><br/>
+  <img src="img/Bidder/BidderLogin.png" width=800><br/>
   <i>Bidder Login</i>
 </p>
 
 * Auctioneer Login
 <p align="center">
-  <img src="img/AuctioneerLogin.png" width=800><br/>
+  <img src="img/Auctioneer/AuctioneerLogin.png" width=800><br/>
   <i>Auctioneer Login</i>
 </p>
 
 * Admin Login
 <p align="center">
-  <img src="img/AdminLogin.png" width=800><br/>
+  <img src="img/Admin/AdminLogin.png" width=800><br/>
   <i>Admin Login</i>
+</p>
+
+* Auctioneer Home Page
+<p align="center">
+  <img src="img/Auctioneer/Home.png" width=1000><br/>
+  <i>Auctioneer Home</i>
+</p>
+
+* Auctioneer Create, Update Page
+<p align="center">
+  <img src="img/Auctioneer/Create_UpdateProduct.png" width=1000><br/>
+  <i>Create, Update Page</i>
+</p>
+
+* Admin Home Page
+<p align="center">
+  <img src="img/Admin/Home.png" width=1000><br/>
+  <i>Admin Home</i>
+</p>
+
+* Admin approves/rejects auction products
+<p align="center">
+  <img src="img/Admin/Home1.png" width=1000><br/>
+  <i>Approves/Rejects products</i>
+</p>
+
+* Admin rejects auction product
+<p align="center">
+  <img src="img/Admin/RejectProduct.png" width=1000><br/>
+  <i>Rejects product</i>
+</p>
+
+* Bidder Home - Displays products with open auctions
+<p align="center">
+  <img src="img/Bidder/Home.png" width=1000><br/>
+  <i>Products are being auctioned</i>
+</p>
+
+* Some auction rules (In the context of the current system):
+  * When the admin approves the product posted by Auctioneer, that product will be opened for public auction to everyone.
+  * When the auction starts, the product price will be the starting price set by the product owner.
+  * For manual auction, the system will calculate the price for the next auction, the user will select the desired option and click Manual Auction.
+  * There will be 5 options include:
+    * The next price = current price + (step price * 1)
+    * The next price = current price + (step price * 2)
+    * The next price = current price + (step price * 3)
+    * The next price = current price + (step price * 4)
+    * The next price = current price + (step price * 5)
+    * (These options are just examples, you can change them to suit your intended use).
+  * When the bidder's price is equal to the current price, the bidder will not be able to make the auction.
+  * The duration of a product's auction will depend on the price of that product. That is, the higher the price of the product, the longer the auction time.
+  * When the auction countdown time ends, the system will stop all auction actions.
+  * The system will perform processing to determine the product auction winner.
+  * All auction participants will receive an email notification of results when the auction ends.
+    
+* Bidder - Manual auction
+  * When the bidder selects the manual auction type, the bidder must conduct the auction himself by pressing the manual auction button.
+    
+<p align="center">
+  <img src="img/Bidder/ManualAuction.gif" width=1000><br/>
+  <i>Manual auction</i>
+</p>
+
+* Bidder - Automatic auction
+  * Bidders can choose the automatic auction type, the system will automatically increase the price when the bidder's current price is not the highest price.
+  * The system only increases the price when the current price + step price < the maximum price the user has set.
+  * If the price exceeds the maximum price, the price increase will stop.
+    
+<p align="center">
+  <img src="img/Bidder/AutoAuction.gif" width=1000><br/>
+  <i>Automatic auction</i>
+</p>
+
+* Bidder - My Product interface displays bidder products that have been successfully auctioned (products that have won the auction).
+<p align="center">
+  <img src="img/Bidder/Payment1.png" width=1000><br/>
+  <i>The products won the auction</i>
+</p>
+
+* Bidder - When clicking on the product, detailed information about the product and whether it has been paid will be displayed.
+<p align="center">
+  <img src="img/Bidder/Payment2.png" width=1000><br/>
+  <i>Product details</i>
+</p>
+
+* Bidder - Online payment process, supports many types of online payments including international credit cards, debit cards, QR codes,...
+<p align="center">
+  <img src="img/Bidder/Payment.gif" width=1000><br/>
+  <i>Payment process</i>
+</p>
+
+* Bidder - Search for products with open auctions
+  * Function to search all products.
+  * Search by exact name, search by approximate name.
+  * Display search suggestions for products in the system.
+  * Display similar products in case the requested product is not found.
+<p align="center">
+  <img src="img/Bidder/Search.gif" width=1000><br/>
+  <i>Search product</i>
 </p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
