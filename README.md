@@ -22,7 +22,14 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#Demo">Demo</a></li>
+    <li><a href="#demo">Demo</a>
+      <detail>
+        <ul>
+          <li><a href="#demo">Demo Login</a></li>
+          <li><a href="#demo-home-page">Demo Home Page</a></li>         
+          <li><a href="#demo-admin-login">Demo Admin Login</a></li>     
+        </ul>
+      </detail></li>
     <li><a href="#license">License</a></li>
   </ol>
 </details>
@@ -137,6 +144,7 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
   <i>Admin Login</i>
 </p>
 
+## Demo Home Page
 * Auctioneer Home Page
 <p align="center">
   <img src="img/Auctioneer/Home.png" width=1000><br/>
