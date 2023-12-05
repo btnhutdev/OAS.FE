@@ -40,12 +40,10 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
 Project: Online Auction System (OAS)<br>
 Part 1: Source Code back-end.<br>
 **Part 2: Source Code front-end**.<br>
 This is the second part of the project.
-
 The system supports users to participate in online product auctions.<br>
 Users can post products for auction.<br>
 Users can also participate in product auctions.<br>
@@ -54,9 +52,7 @@ After successfully bidding on the product, users can make online payments on the
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Built With
-
 The project is built based on the following frameworks/libraries:
-
 * ![C#](https://img.shields.io/badge/C%23-8A2BE2.svg?style=for-the-badge&logo=C%23)
 * ![dotNET Core](https://img.shields.io/badge/.NET%20Core-purple?style=for-the-badge&logo=dotNET)
 * ![ASP.NET MVC](https://img.shields.io/badge/ASP.NET%20MVC-purple?style=for-the-badge&logo=dotnet)
@@ -76,13 +72,11 @@ The project is built based on the following frameworks/libraries:
 
 <!-- GETTING STARTED -->
 ## Getting Started
-
 To get a local copy up and running follow these steps.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Requirements
-
 Before you continue, ensure you meet the following requirements:
 * MS SQL Server, Version = 2022
 * dotNet, Version = 6.0
@@ -97,7 +91,6 @@ Before you continue, ensure you meet the following requirements:
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Installation
-
 I am deploying the system on Docker but it is not yet completed, in the meantime you can install the system and components manually as follows:
 * First you need to install dotNet 6.0 or later.
 * After installation, next you install MS SQL Server version 2022 or later.
@@ -112,11 +105,11 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
   * Auctioneer\appsettings.json file
   * Bidder\appsettings.json file 
 * Install AWS CLI version 2 and log in with your AWS account, making sure your account has permission to access the S3 bucket.
-  
 * **Note**: Some of the installation steps you performed when installing the OAS.BE project can be skipped.
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- USAGE EXAMPLES -->
+<!-- USAGE -->
 ## Usage
 * Right-click Solution in the Solution Explorer window, select Properties, select Multiple startup projects. Select action start for projects:
   * Admin
@@ -152,7 +145,7 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Demo Home Page
+### Demo Home Page
 * Auctioneer Home Page
 <p align="center">
   <img src="img/Auctioneer/Home.png" width=1000><br/>
@@ -173,7 +166,7 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Demo Approves and Rejects Product
+### Demo Approves and Rejects Product
 * Admin approves/rejects auction products
 <p align="center">
   <img src="img/Admin/Home1.png" width=1000><br/>
@@ -194,7 +187,7 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Demo Product Bidding
+### Demo Product Bidding
 * Some auction rules (In the context of the current system):
   * When the admin approves the product posted by Auctioneer, that product will be opened for public auction to everyone.
   * When the auction starts, the product price will be the starting price set by the product owner.
@@ -238,7 +231,7 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Demo Payment
+### Demo Payment
 * Bidder - When clicking on the product, detailed information about the product and whether it has been paid will be displayed.
 <p align="center">
   <img src="img/Bidder/Payment2.png" width=1000><br/>
@@ -253,7 +246,7 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Demo Search Product
+### Demo Search Product
 * Bidder - Search for products with open auctions
   * Function to search all products.
   * Search by exact name, search by approximate name.
