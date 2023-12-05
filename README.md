@@ -49,7 +49,7 @@ Users can post products for auction.<br>
 Users can also participate in product auctions.<br>
 After successfully bidding on the product, users can make online payments on the system.
 
-<p align="right"><a href="#readme-top">(back to top)</a></p>
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Built With
 The project is built based on the following frameworks/libraries:
@@ -255,6 +255,45 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
 <p align="center">
   <img src="img/Bidder/Search.gif" width=1000><br/>
   <i>Search product</i>
+</p>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Demo Email Notifications
+* Email notifying that the product has been approved
+<p align="center">
+  <img src="img/Mail/ApproveProduct.png" width=1000><br/>
+  <i>Approved Product</i>
+</p>
+
+* Email notifying that the product has been Rejected
+<p align="center">
+  <img src="img/Mail/RejectProduct.png" width=1000><br/>
+  <i>Rejected Product</i>
+</p>
+
+* Email notification of successful product auction
+<p align="center">
+  <img src="img/Mail/SuccessAuction.png" width=1000><br/>
+  <i>Successful product auction</i>
+</p>
+
+* Email notification of failed product auction
+<p align="center">
+  <img src="img/Mail/FailedAuction.png" width=1000><br/>
+  <i>Failed product auction</i>
+</p>
+
+* Email notification of successful payment for auction product order
+<p align="center">
+  <img src="img/Mail/OrderSuccess.png" width=1000><br/>
+  <i>Successful payment order</i>
+</p>
+
+* Mail notifying that the product has been successfully sold to the product owner who has posted the product for auction.
+<p align="center">
+  <img src="img/Mail/SoldSuccess.png" width=1000><br/>
+  <i>Sold Success</i>
 </p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
