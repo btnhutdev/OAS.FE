@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Admin Login</title>
+    <title>OAS - Admin Login</title>
     <!-- Simple bar CSS -->
     <link rel="stylesheet" href="~/template/css/simplebar.css">
     <!-- Fonts CSS -->
@@ -47,8 +47,9 @@
                 </div>
                 <div class="form-group">
                     <label for="inputPassword" class="sr-only">Password</label>
-                    <input type="password" asp-for="Password" id="Password" class="form-control form-control-lg" placeholder="Password" required>
+                    <input type="password" minlength="3" asp-for="Password" id="Password" class="form-control form-control-lg" placeholder="Password" required>
                 </div>
+                <p>System login portal for administrator functionality</p>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
             </form>
         </div>
