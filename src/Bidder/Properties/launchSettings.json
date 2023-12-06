@@ -8,11 +8,11 @@
     }
   },
   "profiles": {
-    "Client": {
+    "Client": { // 'Client' is the website name registered with VNPay
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:5030", // Url run in local
+      "applicationUrl": "http://localhost:5030", // URL run in local
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
