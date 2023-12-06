@@ -45,7 +45,8 @@
 Project: Online Auction System (OAS)<br>
 Part 1: Source Code back-end.<br>
 **Part 2: Source Code front-end**.<br>
-This is the second part of the project.
+This is the second part of the project.<br>
+<br>
 The system supports users to participate in online product auctions.<br>
 Users can post products for auction.<br>
 Users can also participate in product auctions.<br>
@@ -76,9 +77,7 @@ The project is built based on the following frameworks/libraries:
 
 <!-- GETTING STARTED -->
 ## Getting Started
-To get a local copy up and running follow these steps.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+The following will be some basic instructions for installing and running the system on a local environment.
 
 ### Requirements
 Before you continue, ensure you meet the following requirements:
@@ -102,6 +101,8 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
 * After installation, next you install MS SQL Server version 2022 or later.
 * You can install an IDE to code C# such as Visual Studio or another IDE, my project uses Visual Studio 2022.
 * Install Redis version = 3.0.504 or later.
+* Install Jenkins version 2.426.1 or later (If you do not need the CICD function, you can skip this step).
+* Install IIS (Internet Information Services) version 10 or later (If you do not need deploy in IIS, you can skip this step).
 * Next, you can Clone the source code or Download the Zip file project OAS.FE.
 * **Note**: This project only contains the front-end source code of the project, if you need the full project, you need to install the OAS.BE project in my github. I have a pin on my github homepage or you can refer to it [**here**](https://github.com/btnhutdev/OAS.BE)
 * You also need to customize information such as AWS account, Email Configuration, Connection Strings, JWT Token,... in the following projects:
@@ -109,7 +110,7 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
 * You also need to customize information such as AWS account, Email Configuration, Connection Strings, JWT Token,... in the following projects:
   * Admin\appsettings.json file
   * Auctioneer\appsettings.json file
-  * Bidder\appsettings.json file 
+  * Bidder\appsettings.json file
 * Install AWS CLI version 2 and log in with your AWS account, making sure your account has permission to access the S3 bucket.
 * **Note**: Some of the installation steps you performed when installing the OAS.BE project can be skipped.
 
@@ -313,8 +314,6 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
   * Website contains Admin source code
   * Website contains Auctioneer source code
   * Website contains Bidder source code
-<br>
-
 * Deploy back-end source code on IIS
 * Physical Path will be in the C:\inetpub\wwwroot\your path
 <p align="center">
@@ -350,7 +349,7 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
 * Each jenkins project will deploy code to a website on IIS created in the previous step.
 * I will guide you to create a project in jenkins, other projects will also be created and configured similarly.
   * After you have installed Jenkins, log in to jenkins.
-  * In the Manage Jenkins tab, select Plugins, in the Available plugins tab, install some necessary plugins to be able to work with .NET and git.
+  * In the Manage Jenkins tab, select Plugins, in the Available plugins tab, install necessary plugins to work with .NET and GitHub.
   * Create one Credential in Dashboard/Manage Jenkins/Credentials
   * After created the credential. Next create a new project in the New Item tab, select Pipeline Project, enter a Project name and click OK.
   * Then go to Project/Configure:
@@ -459,6 +458,8 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
 * When the code on github changes (master branch or any other branch specified).
 * Jenkins will automatically pull to local following the path: C:\ProgramData\Jenkins\.jenkins\workspace
 * Jenkins will then execute other commands such as build, test and finally deploy to the IIS server directory C:\inetpub\wwwroot
+<br>
+
 **Note**: You can customize the local directory where Jenkins will pull code, build code,... You can also specify a deploy folder other than C:\inetpub\wwwroot.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
