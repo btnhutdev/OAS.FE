@@ -125,19 +125,19 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
 
 <!-- DEMO -->
 ## Demo
-* Bidder Login
+* Bidder Login - Login interface for bidders who bid to buy products. 
 <p align="center">
   <img src="img/Bidder/BidderLogin.png" width=800><br/>
   <i>Bidder Login</i>
 </p>
 
-* Auctioneer Login
+* Auctioneer Login - Login interface for auctioneer who have products to post for auction.
 <p align="center">
   <img src="img/Auctioneer/AuctioneerLogin.png" width=800><br/>
   <i>Auctioneer Login</i>
 </p>
 
-* Admin Login
+* Admin Login - Login interface for admins who manage the auction system.
 <p align="center">
   <img src="img/Admin/AdminLogin.png" width=800><br/>
   <i>Admin Login</i>
@@ -146,19 +146,19 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Demo Home Page
-* Auctioneer Home Page
+* Auctioneer Home Page - The interface displays all the auctioneer's own products posted and detailed information.
 <p align="center">
   <img src="img/Auctioneer/Home.png" width=1000><br/>
   <i>Auctioneer Home</i>
 </p>
 
-* Auctioneer Create, Update Page
+* Auctioneer Create, Update Page - Auctioneers can create products for auction or update product information.
 <p align="center">
   <img src="img/Auctioneer/Create_UpdateProduct.png" width=1000><br/>
   <i>Create, Update Page</i>
 </p>
 
-* Admin Home Page
+* Admin Home Page - Administrators can view all products available in the system.
 <p align="center">
   <img src="img/Admin/Home.png" width=1000><br/>
   <i>Admin Home</i>
@@ -168,12 +168,15 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
 
 ### Demo Approves and Rejects Product
 * Admin approves/rejects auction products
+* Products need to be approved before the auction can open.
 <p align="center">
   <img src="img/Admin/Home1.png" width=1000><br/>
   <i>Approves/Rejects products</i>
 </p>
 
 * Admin rejects auction product
+* Rejected products will be flagged as Rejected.
+* When refusing, admin need to enter the reason for the refusal, then the product owner will receive a notification email with the reason for the refusal.
 <p align="center">
   <img src="img/Admin/RejectProduct.png" width=1000><br/>
   <i>Rejects product</i>
