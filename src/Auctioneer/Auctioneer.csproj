@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\img\Auctioneer.webp" />
+    <Content Remove="wwwroot\images\Auctioneer.webp" />
     <Content Remove="wwwroot\lib\bootstrap\LICENSE" />
     <Content Remove="wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt" />
     <Content Remove="wwwroot\lib\jquery-validation\LICENSE.md" />
@@ -64,7 +64,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="wwwroot\img\Auctioneer.webp">
+    <Resource Include="wwwroot\images\Auctioneer.webp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="wwwroot\lib\bootstrap\LICENSE">
