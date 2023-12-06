@@ -34,6 +34,8 @@
           <li><a href="#demo-email-notifications">Email notifications</a></li>
         </ul>
       </detail></li>
+    <li><a href="#deploy-IIS">Deploy IIS</a></li>
+    <li><a href="#cicd-with-jenkins">CI/CD with Jenkins</a></li>
     <li><a href="#license">License</a></li>
   </ol>
 </details>
@@ -301,6 +303,42 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Deploy IIS
+* Next, we deploy the system on the local IIS server
+* I created 4 websites to deploy the system:
+  * Website contains back-end code
+  * Website contains Admin code
+  * Website contains Auctioneer code
+  * Website contains Bidder code
+
+* Deploy back-end source code on IIS
+* Physical Path will be in the C:\inetpub\wwwroot\your path
+<p align="center">
+  <img src="img/IIS/DeployBE.png" width=1000><br/>
+  <i>Deploy back-end source code on IIS</i>
+</p>
+
+* Deploy admin source code on IIS
+* Physical Path will be in the C:\inetpub\wwwroot\your path
+<p align="center">
+  <img src="img/IIS/DeployFE_Admin.png" width=1000><br/>
+  <i>Deploy admin source code on IIS</i>
+</p>
+
+* Deploy auctioneer source code on IIS
+* Physical Path will be in the C:\inetpub\wwwroot\your path
+<p align="center">
+  <img src="img/IIS/DeployFE_Auctioneer.png" width=1000><br/>
+  <i>Deploy auctioneer source code on IIS</i>
+</p>
+
+* Deploy bidder source code on IIS
+* Physical Path will be in the C:\inetpub\wwwroot\your path
+<p align="center">
+  <img src="img/IIS/DeployFE_Bidder.png" width=1000><br/>
+  <i>Deploy bidder source code on IIS</i>
+</p>
+  
 <!-- LICENSE -->
 ## License
 Distributed under the MIT License. See `LICENSE.txt` for more information.
