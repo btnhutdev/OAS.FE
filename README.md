@@ -69,6 +69,8 @@ The project is built based on the following frameworks/libraries:
 * ![CSS3](https://img.shields.io/badge/css3%20-%231572B6.svg?&style=for-the-badge&logo=css3&logoColor=white)
 * ![Bootstrap](https://img.shields.io/badge/bootstrap%20-%23563D7C.svg?&style=for-the-badge&logo=bootstrap&logoColor=white)
 * ![Javascript](https://img.shields.io/badge/javascript%20-%23323330.svg?&style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+* ![Jenkins](https://img.shields.io/badge/Jenkins-black?&style=for-the-badge&logo=Jenkins)
+* ![IIS](https://img.shields.io/badge/IIS-blue?&style=for-the-badge&logo=IIS)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -87,6 +89,8 @@ Before you continue, ensure you meet the following requirements:
 * Account VNPAY
 * AWS IAM Account or Root Account
 * Hangfire Core, Version = 1.8.5.0
+* Jenkins, Version 2.426.1
+* IIS, Version = 10
 * Gmail Account
 * OS: Windows
 
@@ -304,12 +308,12 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Deploy IIS
-* Next, we deploy the system on the local IIS server
-* I created 4 websites to deploy the system:
-  * Website contains back-end code
-  * Website contains Admin code
-  * Website contains Auctioneer code
-  * Website contains Bidder code
+* Next, we deploy the system on the local IIS server. I am created 4 websites to deploy the system:
+  * Website contains back-end source code
+  * Website contains Admin source code
+  * Website contains Auctioneer source code
+  * Website contains Bidder source code
+<br>
 
 * Deploy back-end source code on IIS
 * Physical Path will be in the C:\inetpub\wwwroot\your path
@@ -338,6 +342,126 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
   <img src="img/IIS/DeployFE_Bidder.png" width=1000><br/>
   <i>Deploy bidder source code on IIS</i>
 </p>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## CICD with jenkins
+* I am also created 4 Pipeline projects in jenkins to conveniently deploy CICD source code on the IIS server.
+* Each jenkins project will deploy code to a website on IIS created in the previous step.
+* I will guide you to create a project in jenkins, other projects will also be created and configured similarly.
+  * After you have installed Jenkins, log in to jenkins.
+  * In the Manage Jenkins tab, select Plugins, in the Available plugins tab, install some necessary plugins to be able to work with .NET and git.
+  * Create one Credential in Dashboard/Manage Jenkins/Credentials
+  * After created the credential. Next create a new project in the New Item tab, select Pipeline Project, enter a Project name and click OK.
+  * Then go to Project/Configure:
+  * Check GitHub hook trigger for GITScm polling
+  * Check Poll SCM and enter * * * * * in the Schedule box
+<p align="center">
+  <img src="img/jenkins/BE1.png" width=1000><br/>
+  <i>Configure Jenkins</i>
+</p>
+  * In the Pipeline section, enter the source code in the Script box
+ <br>
+ 
+  ```Groovy
+  pipeline {  
+   agent any  
+   environment {  
+    dotnet = 'C:\\Program Files\\dotnet\\dotnet.exe'  
+   }  
+   
+   stages {  
+    stage('Checkout Stage') {  
+     steps {
+         // replace your credential here
+         git credentialsId: 'replace your credential here', url: 'https://github.com/btnhutdev/OAS.BE.git', branch: 'master'
+     }  
+    } 
+    
+   stage('Build Stage') {  
+     steps {  
+  	bat 'dotnet build OAS_BE.sln --configuration Release /p:OutputPath="C:\\inetpub\\wwwroot\\OAS\\OAS_BE"'
+      }  
+    }   
+    
+    stage('Test Stage') {
+      steps {
+              bat 'dotnet test .\\src\\ApiGateway\\ApiGateway.csproj'
+              bat 'dotnet test .\\src\\Core\\Core.csproj'
+              bat 'dotnet test .\\src\\Domain\\Domain.csproj'
+              bat 'dotnet test .\\src\\Infrastructure\\Infrastructure.csproj'
+              bat 'dotnet test .\\src\\Payment.API\\Payment.API.csproj'
+              bat 'dotnet test .\\src\\Product.API\\Product.API.csproj'
+              bat 'dotnet test .\\src\\Search.API\\Search.API.csproj'
+              bat 'dotnet test .\\src\\Authen.API\\Authen.API.csproj'
+          }
+      }
+          
+    stage("Release Stage"){
+      steps {
+              bat 'dotnet build .\\src\\ApiGateway\\ApiGateway.csproj /p:Platform="Any CPU" /p:DeployOnBuild=true /m /p:OutputPath=C:\\inetpub\\wwwroot\\OAS\\OAS_BE /p:PublishProfile=".\\src\\ApiGateway\\Properties\\PublishProfiles\\ApiGatewayProfile.pubxml"'
+              bat 'dotnet build .\\src\\Authen.API\\Authen.API.csproj /p:Platform="Any CPU" /p:DeployOnBuild=true /m /p:OutputPath=C:\\inetpub\\wwwroot\\OAS\\OAS_BE /p:PublishProfile=".\\src\\Authen.API\\Properties\\PublishProfiles\\AuthenAPIProfile.pubxml"'
+              bat 'dotnet build .\\src\\Core\\Core.csproj /p:Platform="Any CPU" /p:DeployOnBuild=true /m /p:OutputPath=C:\\inetpub\\wwwroot\\OAS\\OAS_BE /p:PublishProfile=".\\src\\Core\\Properties\\PublishProfiles\\CoreProfile.pubxml"'
+              bat 'dotnet build .\\src\\Domain\\Domain.csproj /p:Platform="Any CPU" /p:DeployOnBuild=true /m /p:OutputPath=C:\\inetpub\\wwwroot\\OAS\\OAS_BE /p:PublishProfile=".\\src\\Domain\\Properties\\PublishProfiles\\DomainProfile.pubxml"'
+              bat 'dotnet build .\\src\\Infrastructure\\Infrastructure.csproj /p:Platform="Any CPU" /p:DeployOnBuild=true /m /p:OutputPath=C:\\inetpub\\wwwroot\\OAS\\OAS_BE /p:PublishProfile=".\\src\\Infrastructure\\Properties\\PublishProfiles\\InfrastructureProfile.pubxml"'    
+              bat 'dotnet build .\\src\\Payment.API\\Payment.API.csproj /p:Platform="Any CPU" /p:DeployOnBuild=true /m /p:OutputPath=C:\\inetpub\\wwwroot\\OAS\\OAS_BE /p:PublishProfile=".\\src\\Payment.API\\Properties\\PublishProfiles\\PaymentAPIProfile.pubxml"'  
+              bat 'dotnet build .\\src\\Product.API\\Product.API.csproj /p:Platform="Any CPU" /p:DeployOnBuild=true /m /p:OutputPath=C:\\inetpub\\wwwroot\\OAS\\OAS_BE /p:PublishProfile=".\\src\\Product.API\\Properties\\PublishProfiles\\ProductAPIProfile.pubxml"'  
+              bat 'dotnet build .\\src\\Search.API\\Search.API.csproj /p:Platform="Any CPU" /p:DeployOnBuild=true /m /p:OutputPath=C:\\inetpub\\wwwroot\\OAS\\OAS_BE /p:PublishProfile=".\\src\\Search.API\\Properties\\PublishProfiles\\SearchAPIProfile.pubxml"'
+          }   
+      }
+    
+      stage('Deploy Stage') {
+        steps {
+          // Deploy package to IIS
+          bat '"C:\\Program Files (x86)\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe" -verb:sync -dest:auto -source:package="C:\\inetpub\\wwwroot\\OAS\\OAS_BE\\ApiGateway.zip" -setParam:"IIS Web Application Name"="OAS.BE" -skip:objectName=filePath,absolutePath=".\\\\PackageTmp\\\\Web.config$" -enableRule:DoNotDelete -allowUntrusted=true'
+          bat '"C:\\Program Files (x86)\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe" -verb:sync -dest:auto -source:package="C:\\inetpub\\wwwroot\\OAS\\OAS_BE\\Authen.API.zip" -setParam:"IIS Web Application Name"="OAS.BE" -skip:objectName=filePath,absolutePath=".\\\\PackageTmp\\\\Web.config$" -enableRule:DoNotDelete -allowUntrusted=true'    
+          bat '"C:\\Program Files (x86)\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe" -verb:sync -dest:auto -source:package="C:\\inetpub\\wwwroot\\OAS\\OAS_BE\\Payment.API.zip" -setParam:"IIS Web Application Name"="OAS.BE" -skip:objectName=filePath,absolutePath=".\\\\PackageTmp\\\\Web.config$" -enableRule:DoNotDelete -allowUntrusted=true'    
+          bat '"C:\\Program Files (x86)\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe" -verb:sync -dest:auto -source:package="C:\\inetpub\\wwwroot\\OAS\\OAS_BE\\Product.API.zip" -setParam:"IIS Web Application Name"="OAS.BE" -skip:objectName=filePath,absolutePath=".\\\\PackageTmp\\\\Web.config$" -enableRule:DoNotDelete -allowUntrusted=true'    
+          bat '"C:\\Program Files (x86)\\IIS\\Microsoft Web Deploy V3\\msdeploy.exe" -verb:sync -dest:auto -source:package="C:\\inetpub\\wwwroot\\OAS\\OAS_BE\\Search.API.zip" -setParam:"IIS Web Application Name"="OAS.BE" -skip:objectName=filePath,absolutePath=".\\\\PackageTmp\\\\Web.config$" -enableRule:DoNotDelete -allowUntrusted=true'
+        }
+      }
+   }  
+  }  
+  ```
+  * Configure Script Pipeline
+  <p align="center">
+    <img src="img/jenkins/BE2.png" width=1000><br/>
+    <i>Configure Jenkins</i>
+  </p>
+  
+  * Click Apply and click Save
+  * Then click build now or when the source code on github has a commit, the build process will begin.
+  * Below are some demo.
+
+<p align="center">
+  <img src="img/jenkins/Home.png" width=1000><br/>
+  <i>Jenkins home page</i>
+</p>
+<p align="center">
+  <img src="img/jenkins/BE.png" width=1000><br/>
+  <i>Back-end project</i>
+</p>
+<p align="center">
+  <img src="img/jenkins/FE_Admin.png" width=1000><br/>
+  <i>Admin project</i>
+</p>
+<p align="center">
+  <img src="img/jenkins/FE_Auctioneer.png" width=1000><br/>
+  <i>Auctioneer project</i>
+</p>
+<p align="center">
+  <img src="img/jenkins/FE_Bidder.png" width=1000><br/>
+  <i>Bidder project</i>
+</p>
+
+* Click Apply and click Save
+* After the settings have been completed.
+* When the code on github changes (master branch or any other branch specified).
+* Jenkins will automatically pull to local following the path: C:\ProgramData\Jenkins\.jenkins\workspace
+* Jenkins will then execute other commands such as build, test and finally deploy to the IIS server directory C:\inetpub\wwwroot
+**Note**: You can customize the local directory where Jenkins will pull code, build code,... You can also specify a deploy folder other than C:\inetpub\wwwroot.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
   
 <!-- LICENSE -->
 ## License
