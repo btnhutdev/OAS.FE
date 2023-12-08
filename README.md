@@ -135,19 +135,19 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
 ## Demo
 * Bidder Login - Login interface for bidders who bid to buy products. 
 <p align="center">
-  <img src="img/Bidder/BidderLogin.png" width=800><br/>
+  <img alt="image demo" src="img/Bidder/BidderLogin.png" width=800><br/>
   <i>Bidder Login</i>
 </p>
 
 * Auctioneer Login - Login interface for auctioneer who have products to post for auction.
 <p align="center">
-  <img src="img/Auctioneer/AuctioneerLogin.png" width=800><br/>
+  <img alt="image demo" src="img/Auctioneer/AuctioneerLogin.png" width=800><br/>
   <i>Auctioneer Login</i>
 </p>
 
 * Admin Login - Login interface for admins who manage the auction system.
 <p align="center">
-  <img src="img/Admin/AdminLogin.png" width=800><br/>
+  <img alt="image demo" src="img/Admin/AdminLogin.png" width=800><br/>
   <i>Admin Login</i>
 </p>
 
@@ -156,19 +156,19 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
 ### Demo Home Page
 * Auctioneer Home Page - The interface displays all the auctioneer's own products posted and detailed information.
 <p align="center">
-  <img src="img/Auctioneer/Home.png" width=1000><br/>
+  <img alt="image demo" src="img/Auctioneer/Home.png" width=1000><br/>
   <i>Auctioneer Home</i>
 </p>
 
 * Auctioneer Create, Update Page - Auctioneers can create products for auction or update product information.
 <p align="center">
-  <img src="img/Auctioneer/Create_UpdateProduct.png" width=1000><br/>
+  <img alt="image demo" src="img/Auctioneer/Create_UpdateProduct.png" width=1000><br/>
   <i>Create, Update Page</i>
 </p>
 
 * Admin Home Page - Administrators can view all products available in the system.
 <p align="center">
-  <img src="img/Admin/Home.png" width=1000><br/>
+  <img alt="image demo" src="img/Admin/Home.png" width=1000><br/>
   <i>Admin Home</i>
 </p>
 
@@ -178,7 +178,7 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
 * Admin approves/rejects auction products
 * Products need to be approved before the auction can open.
 <p align="center">
-  <img src="img/Admin/Home1.png" width=1000><br/>
+  <img alt="image demo" src="img/Admin/Home1.png" width=1000><br/>
   <i>Approves/Rejects products</i>
 </p>
 
@@ -186,13 +186,13 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
 * Rejected products will be flagged as Rejected.
 * When refusing, admin need to enter the reason for the refusal, then the product owner will receive a notification email with the reason for the refusal.
 <p align="center">
-  <img src="img/Admin/RejectProduct.png" width=1000><br/>
+  <img alt="image demo" src="img/Admin/RejectProduct.png" width=1000><br/>
   <i>Rejects product</i>
 </p>
 
 * Bidder Home - Displays products with open auctions
 <p align="center">
-  <img src="img/Bidder/Home.png" width=1000><br/>
+  <img alt="image demo" src="img/Bidder/Home.png" width=1000><br/>
   <i>Products are being auctioned</i>
 </p>
 
@@ -220,7 +220,7 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
   * When the bidder selects the manual auction type, the bidder must conduct the auction himself by pressing the manual auction button.
     
 <p align="center">
-  <img src="img/Bidder/ManualAuction.gif" width=1000><br/>
+  <img alt="image demo" src="img/Bidder/ManualAuction.gif" width=1000><br/>
   <i>Manual auction</i>
 </p>
 
@@ -230,13 +230,13 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
   * If the price exceeds the maximum price, the price increase will stop.
     
 <p align="center">
-  <img src="img/Bidder/AutoAuction.gif" width=1000><br/>
+  <img alt="image demo" src="img/Bidder/AutoAuction.gif" width=1000><br/>
   <i>Automatic auction</i>
 </p>
 
 * Bidder - My Product interface displays bidder products that have been successfully auctioned (products that have won the auction).
 <p align="center">
-  <img src="img/Bidder/Payment1.png" width=1000><br/>
+  <img alt="image demo" src="img/Bidder/Payment1.png" width=1000><br/>
   <i>The products won the auction</i>
 </p>
 
@@ -245,13 +245,13 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
 ### Demo History Auction
 * Admin - History of the auction
 <p align="center">
-  <img src="img/History/History1.png" width=1000><br/>
+  <img alt="image demo" src="img/History/History1.png" width=1000><br/>
   <i>History of the auction</i>
 </p>
 
 * Admin - Auction history details
 <p align="center">
-  <img src="img/History/History2.png" width=1000><br/>
+  <img alt="image demo" src="img/History/History2.png" width=1000><br/>
   <i>Auction history details</i>
 </p>
 
@@ -260,13 +260,13 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
 ### Demo Payment
 * Bidder - When clicking on the product, detailed information about the product and whether it has been paid will be displayed.
 <p align="center">
-  <img src="img/Bidder/Payment2.png" width=1000><br/>
+  <img alt="image demo" src="img/Bidder/Payment2.png" width=1000><br/>
   <i>Product details</i>
 </p>
 
 * Bidder - Online payment process, supports many types of online payments including international credit cards, debit cards, QR codes,...
 <p align="center">
-  <img src="img/Bidder/Payment.gif" width=1000><br/>
+  <img alt="image demo" src="img/Bidder/Payment.gif" width=1000><br/>
   <i>Payment process</i>
 </p>
 
@@ -279,7 +279,7 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
   * Display search suggestions for products in the system.
   * Display similar products in case the requested product is not found.
 <p align="center">
-  <img src="img/Bidder/Search.gif" width=1000><br/>
+  <img alt="image demo" src="img/Bidder/Search.gif" width=1000><br/>
   <i>Search product</i>
 </p>
 
@@ -288,37 +288,37 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
 ### Demo Email Notifications
 * Email notifying that the product has been approved
 <p align="center">
-  <img src="img/Mail/ApproveProduct.png" width=1000><br/>
+  <img alt="image demo" src="img/Mail/ApproveProduct.png" width=1000><br/>
   <i>Approved Product</i>
 </p>
 
 * Email notifying that the product has been Rejected
 <p align="center">
-  <img src="img/Mail/RejectProduct.png" width=1000><br/>
+  <img alt="image demo" src="img/Mail/RejectProduct.png" width=1000><br/>
   <i>Rejected Product</i>
 </p>
 
 * Email notification of successful product auction
 <p align="center">
-  <img src="img/Mail/SuccessAuction.png" width=1000><br/>
+  <img alt="image demo" src="img/Mail/SuccessAuction.png" width=1000><br/>
   <i>Successful product auction</i>
 </p>
 
 * Email notification of failed product auction
 <p align="center">
-  <img src="img/Mail/FailedAuction.png" width=1000><br/>
+  <img alt="image demo" src="img/Mail/FailedAuction.png" width=1000><br/>
   <i>Failed product auction</i>
 </p>
 
 * Email notification of successful payment for auction product order
 <p align="center">
-  <img src="img/Mail/OrderSuccess.png" width=1000><br/>
+  <img alt="image demo" src="img/Mail/OrderSuccess.png" width=1000><br/>
   <i>Successful payment order</i>
 </p>
 
 * Mail notifying that the product has been successfully sold to the product owner who has posted the product for auction.
 <p align="center">
-  <img src="img/Mail/SoldSuccess.png" width=1000><br/>
+  <img alt="image demo" src="img/Mail/SoldSuccess.png" width=1000><br/>
   <i>Sold Success</i>
 </p>
 
@@ -333,28 +333,28 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
 * Deploy back-end source code on IIS
 * Physical Path will be in the C:\inetpub\wwwroot\your path
 <p align="center">
-  <img src="img/IIS/DeployBE.png" width=1000><br/>
+  <img alt="image demo" src="img/IIS/DeployBE.png" width=1000><br/>
   <i>Deploy back-end source code on IIS</i>
 </p>
 
 * Deploy admin source code on IIS
 * Physical Path will be in the C:\inetpub\wwwroot\your path
 <p align="center">
-  <img src="img/IIS/DeployFE_Admin.png" width=1000><br/>
+  <img alt="image demo" src="img/IIS/DeployFE_Admin.png" width=1000><br/>
   <i>Deploy admin source code on IIS</i>
 </p>
 
 * Deploy auctioneer source code on IIS
 * Physical Path will be in the C:\inetpub\wwwroot\your path
 <p align="center">
-  <img src="img/IIS/DeployFE_Auctioneer.png" width=1000><br/>
+  <img alt="image demo" src="img/IIS/DeployFE_Auctioneer.png" width=1000><br/>
   <i>Deploy auctioneer source code on IIS</i>
 </p>
 
 * Deploy bidder source code on IIS
 * Physical Path will be in the C:\inetpub\wwwroot\your path
 <p align="center">
-  <img src="img/IIS/DeployFE_Bidder.png" width=1000><br/>
+  <img alt="image demo" src="img/IIS/DeployFE_Bidder.png" width=1000><br/>
   <i>Deploy bidder source code on IIS</i>
 </p>
 
@@ -372,7 +372,7 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
   * Check GitHub hook trigger for GITScm polling
   * Check Poll SCM and enter * * * * * in the Schedule box
 <p align="center">
-  <img src="img/jenkins/BE1.png" width=1000><br/>
+  <img alt="image demo" src="img/jenkins/BE1.png" width=1000><br/>
   <i>Configure Jenkins</i>
 </p>
   * In the Pipeline section, enter the source code in the Script box
@@ -440,7 +440,7 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
   ```
   * Configure Script Pipeline
   <p align="center">
-    <img src="img/jenkins/BE2.png" width=1000><br/>
+    <img alt="image demo" src="img/jenkins/BE2.png" width=1000><br/>
     <i>Configure Jenkins</i>
   </p>
   
@@ -449,23 +449,23 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
   * Below are some demo.
 
 <p align="center">
-  <img src="img/jenkins/Home.png" width=1000><br/>
+  <img alt="image demo" src="img/jenkins/Home.png" width=1000><br/>
   <i>Jenkins home page</i>
 </p>
 <p align="center">
-  <img src="img/jenkins/BE.png" width=1000><br/>
+  <img alt="image demo" src="img/jenkins/BE.png" width=1000><br/>
   <i>Back-end project</i>
 </p>
 <p align="center">
-  <img src="img/jenkins/FE_Admin.png" width=1000><br/>
+  <img alt="image demo" src="img/jenkins/FE_Admin.png" width=1000><br/>
   <i>Admin project</i>
 </p>
 <p align="center">
-  <img src="img/jenkins/FE_Auctioneer.png" width=1000><br/>
+  <img alt="image demo" src="img/jenkins/FE_Auctioneer.png" width=1000><br/>
   <i>Auctioneer project</i>
 </p>
 <p align="center">
-  <img src="img/jenkins/FE_Bidder.png" width=1000><br/>
+  <img alt="image demo" src="img/jenkins/FE_Bidder.png" width=1000><br/>
   <i>Bidder project</i>
 </p>
 
