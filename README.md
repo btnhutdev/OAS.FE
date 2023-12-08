@@ -29,6 +29,7 @@
           <li><a href="#demo-home-page">Home Page</a></li>         
           <li><a href="#demo-approves-and-rejects-product">Approves and Rejects Product</a></li>     
           <li><a href="#demo-product-bidding">Product Bidding</a></li>
+          <li><a href="#demo-history-auction">History Auction</a></li>
           <li><a href="#demo-payment">Payment</a></li>
           <li><a href="#demo-search-product">Search product</a></li>
           <li><a href="#demo-email-notifications">Email notifications</a></li>
@@ -237,6 +238,21 @@ I am deploying the system on Docker but it is not yet completed, in the meantime
 <p align="center">
   <img src="img/Bidder/Payment1.png" width=1000><br/>
   <i>The products won the auction</i>
+</p>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Demo History Auction
+* Admin - History of the auction
+<p align="center">
+  <img src="img/History/History1.png" width=1000><br/>
+  <i>History of the auction</i>
+</p>
+
+* Admin - Auction history details
+<p align="center">
+  <img src="img/History/History2.png" width=1000><br/>
+  <i>Auction history details</i>
 </p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
